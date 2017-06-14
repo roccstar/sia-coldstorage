@@ -3,8 +3,7 @@ package main
 import (
 	"encoding/json"
 	"log"
-	"os"
-
+	"github.com/gopherjs/gopherjs/js"
 	"github.com/NebulousLabs/Sia/crypto"
 	"github.com/NebulousLabs/Sia/modules"
 	"github.com/NebulousLabs/Sia/types"
@@ -23,7 +22,7 @@ func getAddress(seed modules.Seed, index uint64) types.UnlockHash {
 	}.UnlockHash()
 }
 
-func main() {
+func SiaColdStorage() *js.Object {
 	// generate a seed and a few addresses from that seed
 	var seed modules.Seed
 	fastrand.Read(seed[:])
@@ -40,11 +39,21 @@ func main() {
 		addresses = append(addresses, getAddress(seed, i))
 	}
 
-	enc := json.NewEncoder(os.Stdout)
-	enc.SetIndent("", "  ")
 	outputData := struct {
 		Seed      string
 		Addresses []types.UnlockHash
 	}{seedStr, addresses}
-	enc.Encode(outputData)
+	out, err := json.Marshal(outputData)
+
+	// log if error
+	if err != nil {
+		log.Fatal(err)
+	}
+	
+	// set wallet in DOM to grab on client side
+	return js.Global.Get("Object").New(string(out))
+}
+
+func main() {
+	js.Global.Set("SiacoinWalletGenerator", SiaColdStorage)
 }

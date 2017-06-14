@@ -1,0 +1,19 @@
+<html>
+  <head>
+  <script type="text/javascript">
+    const generateWallet = () => {
+        if(window.SiacoinWalletGenerator) {
+		Promise.resolve(new SiacoinWalletGenerator).then(resp => {
+			let wallet = JSON.parse(resp.toString())
+			let test = `<div><h2>Siacoin Seed (PRIVATE):</h2><string>${wallet.Seed}</strong></div><h2>Siacoin Addresses (PUBLIC)</h2><ul>${wallet.Addresses.map(addy => `<li>${addy}</li>`).join('')}</ul><a href="#" onclick="javascript:generateWallet()">Generate New Wallet</a>`;
+			document.body.innerHTML = test;
+		})
+		
+	}
+    }
+    window.onload = () => generateWallet();
+  </script>
+  <script type="text/javascript" src="./build/sia-coldstorage-json.min.js"></script>
+  </head>
+  <body></body>
+</html>

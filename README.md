@@ -6,7 +6,7 @@
 
 To build you're going to need to have `Go` (https://golang.org/).
 
-## USAGE
+## BUILDING
 
 ### Linux / FreeBSD / Unix / macOS
 
@@ -22,9 +22,16 @@ Download the latest release for your platform, then navigate to the binary in yo
 go build -o build\sia-coldstorage-json.exe
 ```
 
-Once it is built you can run the binary in your terminal
+## USAGE 
+
+### HTML (Client Side)
+
+After a successful build open up the `./wallet.html` file and it will generate you a new private seed and 20 addresses. Copy this text and save it to a file somewhere safe or print it up on an air-gapped computer and printer and then throw both into a vat of acid for maximum security.
+
 
 ### Linux / FreeBSD / Unix / macOS
+
+Once it is built you can run the binary in your terminal
 
 ```
 ./sia-coldstorage-json
